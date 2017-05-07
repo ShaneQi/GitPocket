@@ -1,3 +1,18 @@
-<h1>
-  {{title}}
-</h1>
+<form style="margin-bottom:20px;" (ngSubmit)="submitRepo()">
+  repo-host:
+  <select name="repo_host" [(ngModel)]="newRepo.host_id">
+    <option *ngFor="let host of hosts" [value]="host.id">{{host.name}}</option>
+  </select><br> 
+  repo-owner: 
+  <input type="text" name="repo_owner" [(ngModel)]="newRepo.owner"><br>
+  repo-name: 
+  <input type="text" name="repo_name" [(ngModel)]="newRepo.name"><br/>
+  <input type="submit" value="Add Repo">
+</form>
+
+<div *ngFor="let repo of repos">
+  {{repo.name}} | {{repo.owner}} | {{repo.host?.name}}<br> tags:
+  <span *ngFor="let tag of repo.tags" style="background-color:green;margin-right: 2px;"> {{tag.name}} </span>
+  <br>
+  <br>
+</div>
