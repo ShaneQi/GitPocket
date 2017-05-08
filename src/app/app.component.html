@@ -11,7 +11,9 @@
 </form>
 
 <div *ngFor="let repo of repos">
-  {{repo.name}} | {{repo.owner}} | {{repo.host?.name}}<br> tags:
+  <a [href]="repoUrl(repo)" target="_blank">{{repo.name}}</a> | {{repo.owner}} <br>
+  <button (click)="deleteRepo(repo)">Delete</button><br>
+  tags:
   <span *ngFor="let tag of repo.tags" style="background-color:green;margin-right: 2px;"> {{tag.name}} </span>
   <br>
   <br>

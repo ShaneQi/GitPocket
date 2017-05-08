@@ -34,6 +34,21 @@ export class AppComponent {
       .map(res => res.json())
       .subscribe(repo => this.repos.push(repo));
   }
+
+  repoUrl(repo): string {
+    for (let host of this.hosts) {
+      if (host.id == repo.host_id) {
+        return host.url + repo.owner + "/" + repo.name
+      }
+    }
+  }
+
+  deleteRepo(repo) {
+    this.http.delete("http://localhost:3001/v1/repo/" + repo.id)
+    .subscribe();
+    this.repos.splice(this.repos.indexOf(repo), 1);
+  }
+
 }
 
 export class Repo {
