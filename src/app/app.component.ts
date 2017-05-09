@@ -18,6 +18,7 @@ export class AppComponent {
       .map(res => res.json())
       .subscribe(repos => {
         for (let repo of repos) {
+          repo.newTag = "";
           http.get("http://localhost:3001/v1/repo/" + repo.id + "/tags")
             .map(res => res.json())
             .subscribe(tags => repo.tags = tags)
@@ -45,8 +46,20 @@ export class AppComponent {
 
   deleteRepo(repo) {
     this.http.delete("http://localhost:3001/v1/repo/" + repo.id)
-    .subscribe();
+      .subscribe();
     this.repos.splice(this.repos.indexOf(repo), 1);
+  }
+
+  submitTag(repo) {
+    this.http.post("http://localhost:3001/v1/repo/" + repo.id + "/tags", { "name": repo.newTag })
+      .subscribe();
+    repo.tags.push({ "name": repo.newTag });
+  }
+
+  deleteTag(repo, tag_name) {
+    this.http.delete("http://localhost:3001/v1/repo/" + repo.id + "/tag/" + tag_name)
+      .subscribe();
+    repo.tags.splice(repo.tags.indexOf({"name": tag_name}), 1);
   }
 
 }
